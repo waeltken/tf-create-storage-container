@@ -1,6 +1,5 @@
 locals {
-  resource_group_name  = "${var.environment_name}-rg"
-  storage_account_name = "${var.environment_name}storage"
+  resource_group_name = "${var.environment_name}-rg"
 
   tags = {
     owner           = "Clemens Wältken"
@@ -17,19 +16,6 @@ resource "azurerm_resource_group" "default" {
   lifecycle {
     ignore_changes = [tags["owner"]]
   }
-}
-
-module "storage" {
-  source = "./modules/blobstorage"
-
-  resource_group_name = azurerm_resource_group.default.name
-  location            = azurerm_resource_group.default.location
-
-  tags = local.tags
-}
-
-output "storage_account_id" {
-  value = module.storage.storage_account_id
 }
 
 data "azurerm_client_config" "me" {
