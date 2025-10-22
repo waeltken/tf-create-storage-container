@@ -46,13 +46,19 @@ jobs:
           terraform plan -input=false -no-color > plan.txt
           cat plan.txt
 
+      - name: Prepare PR comment with Terraform Plan
+        if: github.event_name == 'pull_request'
+        run: |
+          printf '#### Terraform Plan\n```\n' > pr_comment.txt
+          head -300 plan.txt >> pr_comment.txt
+          printf '\n```\n*Full plan output truncated to first 300 lines.*\n' >> pr_comment.txt
+
       - name: Comment PR with Terraform Plan
         if: github.event_name == 'pull_request'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          PLAN_SUMMARY=$(head -300 plan.txt)
-          gh pr comment ${{ github.event.pull_request.number }} --body $'#### Terraform Plan\n\n```\n'$PLAN_SUMMARY'\n```\n*Full plan output truncated to first 300 lines.*'
+          gh pr comment ${{ github.event.pull_request.number }} --body-file pr_comment.txt
         shell: bash
 
       - name: Terraform Apply
