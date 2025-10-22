@@ -22,9 +22,8 @@ resource "azurerm_resource_group" "default" {
 module "storage" {
   source = "./modules/blobstorage"
 
-  resource_group_name  = azurerm_resource_group.default.name
-  storage_account_name = local.storage_account_name
-  location             = azurerm_resource_group.default.location
+  resource_group_name = azurerm_resource_group.default.name
+  location            = azurerm_resource_group.default.location
 
   tags = local.tags
 }
@@ -32,9 +31,8 @@ module "storage" {
 module "second" {
   source = "./modules/blobstorage"
 
-  resource_group_name  = azurerm_resource_group.default.name
-  storage_account_name = local.storage_account_name
-  location             = azurerm_resource_group.default.location
+  resource_group_name = azurerm_resource_group.default.name
+  location            = azurerm_resource_group.default.location
 
   tags = local.tags
 }
