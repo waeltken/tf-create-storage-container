@@ -5,7 +5,3 @@ output "subscription_id" {
 output "location" {
   value = azurerm_resource_group.default.location
 }
-
-output "storage_account_url" {
-  value = module.storage.primary_blob_endpoint
-}
