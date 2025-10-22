@@ -12,5 +12,5 @@ variable "location" {
 variable "environment_name" {
   description = "The name of the environment (e.g., dev, test, prod)."
   type        = string
-  default     = "dev"
+  default     = "storage"
 }

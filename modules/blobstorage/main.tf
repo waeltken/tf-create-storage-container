@@ -1,7 +1,3 @@
-data "azurerm_resource_group" "default" {
-  name = var.resource_group_name
-}
-
 resource "random_string" "suffix" {
   length  = 4
   special = false
@@ -18,7 +14,7 @@ locals {
 resource "azurerm_storage_account" "default" {
   name = local.storage_account_name
 
-  location            = data.azurerm_resource_group.default.location
+  location            = var.location
   resource_group_name = var.resource_group_name
 
   account_tier             = "Standard"
@@ -39,7 +35,7 @@ resource "azurerm_storage_account" "default" {
 }
 
 resource "azurerm_storage_container" "state" {
-  name                  = "tfstate"
+  name                  = var.container_name
   storage_account_id    = azurerm_storage_account.default.id
   container_access_type = "private"
 }

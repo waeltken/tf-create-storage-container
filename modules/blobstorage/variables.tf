@@ -3,6 +3,17 @@ variable "resource_group_name" {
   type        = string
 }
 
+variable "location" {
+  description = "Location of the resources"
+  type        = string
+}
+
+variable "container_name" {
+  description = "Name of the storage container"
+  type        = string
+  default     = "default"
+}
+
 variable "storage_account_name" {
   description = "Name of the storage account"
   type        = string

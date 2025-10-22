@@ -1,9 +1,10 @@
 locals {
-  resource_group_name  = "eon-${var.environment_name}-rg"
-  storage_account_name = "eon${var.environment_name}storage"
+  resource_group_name  = "${var.environment_name}-rg"
+  storage_account_name = "${var.environment_name}storage"
 
   tags = {
-    owner = "Clemens Wältken"
+    owner           = "Clemens Wältken"
+    SecurityControl = "Ignore"
   }
 }
 
@@ -23,6 +24,7 @@ module "storage" {
 
   resource_group_name  = azurerm_resource_group.default.name
   storage_account_name = local.storage_account_name
+  location             = azurerm_resource_group.default.location
 
   tags = local.tags
 }
@@ -30,7 +32,9 @@ module "storage" {
 module "second" {
   source = "./modules/blobstorage"
 
-  resource_group_name = azurerm_resource_group.default.name
+  resource_group_name  = azurerm_resource_group.default.name
+  storage_account_name = local.storage_account_name
+  location             = azurerm_resource_group.default.location
 
   tags = local.tags
 }
