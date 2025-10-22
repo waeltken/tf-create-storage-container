@@ -51,7 +51,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           PLAN_SUMMARY=$(head -300 plan.txt)
-          gh pr comment ${{ github.event.pull_request.number }} --body "#### Terraform Plan\n\n\`\`\`\n$PLAN_SUMMARY\n\`\`\`\n*Full plan output truncated to first 300 lines.*"
+          gh pr comment ${{ github.event.pull_request.number }} --body $'#### Terraform Plan\n\n```\n'$PLAN_SUMMARY'\n```\n*Full plan output truncated to first 300 lines.*'
         shell: bash
 
       - name: Terraform Apply
